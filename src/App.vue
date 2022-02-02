@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <!-- <div class="container">
     <users-list />
   </div>
 
@@ -37,78 +37,79 @@
 
   <div class="container">
     <button @click="showDialog">Show Dialog</button>
-  </div>
+  </div> -->
+  <router-view />
 </template>
 
 <script>
-import UsersList from './components/UsersList.vue';
+// import UsersList from './components/UsersList.vue';
 
-export default {
-  components: { UsersList },
-  data() {
-    return {
-      dialogIsVisible: false,
-      animatedBlock: false,
-      pIsVisible: false,
-      usersAreVisible: false,
-      enterInterval: null,
-      leaveInterval: null,
-    };
-  },
-  methods: {
-    enterCancelled() {
-      clearInterval(this.enterInterval);
-    },
-    leaveCancelled() {
-      clearInterval(this.leaveInterval);
-    },
-    beforeEnter(el) {
-      el.style.opacity = 0;
-    },
-    enter(el, done) {
-      let round = 1;
+// export default {
+//   components: { UsersList },
+//   data() {
+//     return {
+//       dialogIsVisible: false,
+//       animatedBlock: false,
+//       pIsVisible: false,
+//       usersAreVisible: false,
+//       enterInterval: null,
+//       leaveInterval: null,
+//     };
+//   },
+//   methods: {
+//     enterCancelled() {
+//       clearInterval(this.enterInterval);
+//     },
+//     leaveCancelled() {
+//       clearInterval(this.leaveInterval);
+//     },
+//     beforeEnter(el) {
+//       el.style.opacity = 0;
+//     },
+//     enter(el, done) {
+//       let round = 1;
 
-      this.enterInterval = setInterval(() => {
-        el.style.opacity = round * 0.011;
-        round++;
-        if (round > 100) {
-          clearInterval(this.enterInterval);
-          done();
-        }
-      }, 20);
-    },
-    beforeLeave(el) {
-      el.style.opacity = 1;
-    },
-    leave(el, done) {
-      let round = 1;
+//       this.enterInterval = setInterval(() => {
+//         el.style.opacity = round * 0.011;
+//         round++;
+//         if (round > 100) {
+//           clearInterval(this.enterInterval);
+//           done();
+//         }
+//       }, 20);
+//     },
+//     beforeLeave(el) {
+//       el.style.opacity = 1;
+//     },
+//     leave(el, done) {
+//       let round = 1;
 
-      this.leaveInterval = setInterval(() => {
-        el.style.opacity = 1 - round * 0.011;
-        round++;
-        if (round > 100) {
-          clearInterval(this.leaveInterval);
-          done();
-        }
-      }, 20);
-    },
-    toggleUsers() {
-      this.usersAreVisible = !this.usersAreVisible;
-    },
-    animateBlock() {
-      this.animatedBlock = true;
-    },
-    showDialog() {
-      this.dialogIsVisible = true;
-    },
-    toggleParagraph() {
-      this.pIsVisible = !this.pIsVisible;
-    },
-    hideDialog() {
-      this.dialogIsVisible = false;
-    },
-  },
-};
+//       this.leaveInterval = setInterval(() => {
+//         el.style.opacity = 1 - round * 0.011;
+//         round++;
+//         if (round > 100) {
+//           clearInterval(this.leaveInterval);
+//           done();
+//         }
+//       }, 20);
+//     },
+//     toggleUsers() {
+//       this.usersAreVisible = !this.usersAreVisible;
+//     },
+//     animateBlock() {
+//       this.animatedBlock = true;
+//     },
+//     showDialog() {
+//       this.dialogIsVisible = true;
+//     },
+//     toggleParagraph() {
+//       this.pIsVisible = !this.pIsVisible;
+//     },
+//     hideDialog() {
+//       this.dialogIsVisible = false;
+//     },
+//   },
+// };
 </script>
 
 <style>
@@ -121,7 +122,9 @@ html {
 body {
   margin: 0;
 }
-button {
+button,
+a {
+  text-decoration: none;
   font: inherit;
   padding: 0.5rem 2rem;
   border: 1px solid #810032;
