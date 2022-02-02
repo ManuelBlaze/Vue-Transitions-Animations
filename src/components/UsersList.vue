@@ -64,11 +64,16 @@ button {
 
 .user-list-leave-active {
   transition: all 0.15s ease-in;
+  position: absolute;
 }
 
 .user-list-enter-to,
 .user-list-leave-from {
   opacity: 1;
   transform: translateX(0);
+}
+
+.user-list-move {
+  transition: transform 0.8s ease;
 }
 </style>
