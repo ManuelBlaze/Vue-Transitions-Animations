@@ -5,7 +5,15 @@
   </div>
 
   <div class="container">
-    <transition name="para">
+    <transition
+      name="para"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @before-leave="beforeLeave"
+      @leave="leave"
+      @enter-cancelled="enterCancelled"
+      @leave-cancelled="leaveCancelled"
+    >
       <p v-if="pIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParagraph">Toggle Paragraph</button>
@@ -36,9 +44,47 @@ export default {
       animatedBlock: false,
       pIsVisible: false,
       usersAreVisible: false,
+      enterInterval: null,
+      leaveInterval: null,
     };
   },
   methods: {
+    enterCancelled() {
+      clearInterval(this.enterInterval);
+    },
+    leaveCancelled() {
+      clearInterval(this.leaveInterval);
+    },
+    beforeEnter(el) {
+      el.style.opacity = 0;
+    },
+    enter(el, done) {
+      let round = 1;
+
+      this.enterInterval = setInterval(() => {
+        el.style.opacity = round * 0.011;
+        round++;
+        if (round > 100) {
+          clearInterval(this.enterInterval);
+          done();
+        }
+      }, 20);
+    },
+    beforeLeave(el) {
+      el.style.opacity = 1;
+    },
+    leave(el, done) {
+      let round = 1;
+
+      this.leaveInterval = setInterval(() => {
+        el.style.opacity = 1 - round * 0.011;
+        round++;
+        if (round > 100) {
+          clearInterval(this.leaveInterval);
+          done();
+        }
+      }, 20);
+    },
     toggleUsers() {
       this.usersAreVisible = !this.usersAreVisible;
     },
@@ -110,10 +156,10 @@ button:active {
   transform: translateY(-30px);
 } */
 
-.para-enter-active {
-  /* transition: all 0.3s ease-out; */
+/* .para-enter-active {
+  transition: all 0.3s ease-out;
   animation: slide-scale 0.3s ease-out;
-}
+} */
 
 /* .v-enter-to {
   opacity: 1;
@@ -125,9 +171,9 @@ button:active {
   transform: translateY(-30px);
 } */
 
-.para-leave-active {
+/* .para-leave-active {
   animation: slide-scale 0.3s ease-out;
-}
+} */
 
 /* .v-leave-to {
   opacity: 0;
